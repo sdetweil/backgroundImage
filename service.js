@@ -28,7 +28,7 @@ angular.module("SmartMirror")
                 let f = path + "/" + file
                 if (! fs.statSync(f).isDirectory() ) {
                   let type=mime.lookup(file)
-                  if (enabledTypes.indexOf(type) >= 0 && type !== false) {
+                  if (type !== false && enabledTypes.indexOf(type) >= 0 ) {
                     filelist.push(f);
                   }
                 }

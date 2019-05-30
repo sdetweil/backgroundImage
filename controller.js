@@ -15,14 +15,16 @@ angular.module("SmartMirror") //,['ngAnimate']
       sh=$scope.screen.height=dimensions.height
       // load all the sources images
       var p = BackgroundImageViewerService.loadImages($scope)
-      // once loaded
-      Promise.all(p).then(() =>{ 
-        // start the display timer 
-        $interval( 
-           function(){LoadNextImage( this.service, this.scope)}.bind({source :config.BackgroundImageViewer.sources[0],scope:$scope,service:BackgroundImageViewerService}),
-           config.BackgroundImageViewer.cycle*1000
-        );
-      }); 
+      if(p.length) {
+        // once loaded
+        Promise.all(p).then(() =>{ 
+          // start the display timer 
+          $interval( 
+             function(){LoadNextImage( this.service, this.scope)}.bind({source :config.BackgroundImageViewer.sources[0],scope:$scope,service:BackgroundImageViewerService}),
+             config.BackgroundImageViewer.cycle*1000
+          );
+        }); 
+      }
     }  
   );
 // start viewing the next image  
