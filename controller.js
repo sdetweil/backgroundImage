@@ -120,17 +120,24 @@ function loadHandler (evt) {
     img1.height = sh-1;
   }
   delete img1.style.backgroundSize 
-  img1.style.opacity =	.95// this.self.config.opacity;
-  img1.style.transition = "opacity 1.25s";
-  img1.style.display = "block";
+ // img1.style.opacity =	.95// this.self.config.opacity;
+ // img1.style.transition = "opacity 1.25s";
+ // img1.style.display = "block";
   
   var wrapper = document.getElementById("bkimg");
   // if another image was already displayed
-  if( wrapper.firstChild!=wrapper.lastChild)
+  let c = wrapper.childElementCount;
+  if(c >1)
   {
-    // hide it
-    wrapper.firstChild.style.opacity=0;
-    // remove the image element from the div
-    wrapper.removeChild(wrapper.firstChild);
-  }
+    for( let i =0 ; i<c-1;i++){
+      // hide it
+      wrapper.firstChild.style.opacity=0;
+      // remove the image element from the div
+      wrapper.removeChild(wrapper.firstChild);
+    }
+  }    
+  wrapper.firstChild.style.opacity =	.95// this.self.config.opacity;
+  wrapper.firstChild.style.transition = "opacity 1.25s";
+  wrapper.firstChild.style.display = "block";    
+
 };

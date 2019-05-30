@@ -1,4 +1,4 @@
-var path=require('path')
+//var path=require('path')
 angular.module("SmartMirror")
 	.factory("BackgroundImageViewerService", 
   function BackgroundImageSchedulerService($http, $interval) {
