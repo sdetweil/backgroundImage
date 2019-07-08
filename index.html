@@ -1,1 +1,7 @@
-<div id="bkimg" class="backgroundImage" ng-controller="BackgroundImageViewerController" ng-cloak ng-show="focus == 'default'"></div> 
+<div class="backgroundImage" ng-controller="BackgroundImageViewerController" ng-cloak ng-show="focus == 'default'">
+   <img  id="img{{$index}}" ng-bind="biimages" ng-repeat="image in biimages" ng-src="{{image.file}}"
+      ng-if="image.active === true" 
+      ng-show="image.show === true" 
+      image-Loaded
+   />   
+</div> 

@@ -1,9 +1,9 @@
-//var path=require('path')
+
 angular.module("SmartMirror")
 	.factory("BackgroundImageViewerService", 
-  function BackgroundImageSchedulerService($http, $interval) {
+  function ($http, $interval) {
   var enabledTypes = ["image/jpeg", "image/png", "image/gif"];
-  var service= {}
+  var biservice= {}
   var imageIndex=-1;
   var images = [];
   
@@ -29,7 +29,7 @@ angular.module("SmartMirror")
                 if (! fs.statSync(f).isDirectory() ) {
                   let type=mime.lookup(file)
                   if (type !== false && enabledTypes.indexOf(type) >= 0 ) {
-                    filelist.push(f);
+                    filelist.push({file:f, show:false, active:false});
                   }
                 }
               }
@@ -50,7 +50,7 @@ angular.module("SmartMirror")
 	}
 
   // load all images from all sources into one list
-  service.loadImages= function(scope){
+  biservice.loadImages= function(scope){
     let promises= []
     images = [];
     // loop thru the sources
@@ -59,14 +59,10 @@ angular.module("SmartMirror")
       let p = new Promise((resolve,reject) =>{
         let path = __dirname + '/plugins'+'/backgroundImage/'+source.path;
         // get the images for this source
+        //console.log("getting images from path="+path+" source="+source)
         getImages(path).then((imagelist) =>{ 
           // save the source images to the main list
-          images=images.concat(imagelist)
-          // if shuffle is requested
-          if(config.BackgroundImageViewer.shuffle){
-            // shuffle the list
-            images=getShuffledArr(images)
-          }          
+          images=images.concat(imagelist)         
           // restart the list at the beginning
           source.index=0;
           imageIndex=0;
@@ -79,7 +75,7 @@ angular.module("SmartMirror")
     return promises;
   }
   // get next image from the list
-  service.next= function(scope){
+  biservice.next= function(scope){
     var promise = new Promise((resolve, reject) => {
       // if we have more images
       if(imageIndex>=0 && imageIndex<images.length) {    
@@ -93,15 +89,23 @@ angular.module("SmartMirror")
         // refresh the list
         var p= service.loadImages(scope)
         Promise.all(p).then(() => {        
+					service.getImageList();
           imageIndex=0;
           // return next image
           resolve(images[imageIndex++])
         })
       }
     })
-    return promise;
+    return promise;    
   }
-
-  return service  
+  biservice.getImageList = function(){
+		// if shuffle is requested
+		if(config.BackgroundImageViewer.shuffle){
+			// shuffle the list
+			images=getShuffledArr(images)
+		}
+    return images;
+  }  
+  return biservice  
   }
 );

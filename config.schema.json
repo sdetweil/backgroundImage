@@ -65,9 +65,10 @@
         },
         {
           "type":"array",
+          "title":"Image sources",          
           "items":[
             {
-              "type":"fieldset",          
+              "type":"fieldset",   
               "items":[
                 {
                 "description":"Name",              

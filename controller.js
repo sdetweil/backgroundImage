@@ -1,60 +1,69 @@
 var mime = require("mime-types");
+var ngrepeat = true;
+//directive for image loaded event
+angular.module("SmartMirror").directive('imageLoaded', function () {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      element.bind("load" , function(e){
+        //console.log("loaded")
+        loadHandler(e);
+      });
+    }
+  }
+});
 
 angular.module("SmartMirror") //,['ngAnimate']
 	.controller("BackgroundImageViewerController", 
-    function ($scope, $http, $interval, BackgroundImageViewerService) {
+    function ($scope, $http, $timeout, BackgroundImageViewerService) {
 
       var atomScreen = require("electron").screen
 
       var mainScreen =atomScreen.getPrimaryDisplay();
-      var dimensions = mainScreen.size;      
+      var dimensions = mainScreen.size;    
+      var counter = 0;
 
-      console.log("window size w="+dimensions.width+" h="+dimensions.height);
+      //console.log("window size w="+dimensions.width+" h="+dimensions.height);
       $scope.screen= {}
       sw=$scope.screen.width=dimensions.width
       sh=$scope.screen.height=dimensions.height
+      biscope=$scope;
+      biscope.biimages=[]
+      biscope.biindex=-1;
       // load all the sources images
-      var p = BackgroundImageViewerService.loadImages($scope)
-      if(p.length) {
-        // once loaded
-        Promise.all(p).then(() =>{ 
-          // start the display timer 
-          $interval( 
-             function(){LoadNextImage( this.service, this.scope)}.bind({source :config.BackgroundImageViewer.sources[0],scope:$scope,service:BackgroundImageViewerService}),
-             config.BackgroundImageViewer.cycle*1000
-          );
-        }); 
-      }
-    }  
-  );
-// start viewing the next image  
-function LoadNextImage(service, scope){
-  // only change images if visual focus is set. ( not sleep, etc)
-  if(scope.focus == 'default') {
-    service.next(scope).then((image) => {
-      let parent = document.getElementById("bkimg")      
-        let img = document.createElement('img')
-        img.style.top = sh;  
-        img.style.position="relative";      
-        img.style.opacity = 0;      
-        img.style.transition = "opacity 1.25s";
-        img.style.display = "none"
-        img.src=image
-        if(config.BackgroundImageViewer.size!== 'maintain'){
-            img.style.backgroundSize= 'cover'
+
+      timeout= $timeout;
+      $scope.$watch('focus', () => {
+        // if the new focus is sleep
+        if($scope.focus ==='sleep'){ 
+          // hide the current image
+          biscope.biimages[biscope.biindex].show=false;
+        } else {
+          // only after 1st time notice.. initial setting fires watch handler
+          if(counter >0){
+            LoadNextImage(BackgroundImageViewerService, biscope);
+          }
         }
-        // call this routine when the image is ready to display
-        img.onload= loadHandler;
-      parent.appendChild(img);
-      
-      //scope.currentImage=image;
-      //console.log("$scope.currentImage= "+scope.currentImage) 
-    })      
-  }
-}  
-var sw=0;
-var sh=0;
-  
+      })
+      sservice = BackgroundImageViewerService;
+      cycle=config.BackgroundImageViewer.cycle*1000
+      let p = BackgroundImageViewerService.loadImages($scope)
+      Promise.all(p).then(
+         () =>{ 
+                biscope.biimages=BackgroundImageViewerService.getImageList();
+                biscope.biindex=0;
+                LoadNextImage( BackgroundImageViewerService, $scope);
+                counter =1;
+              }
+         );
+     } 
+  );
+  var biscope=null;
+  var timeout = null;
+  var sservice= null;
+  var cycle = 15*1000;
+
+
   function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
 
     var result = { width: 0, height: 0, fScaleToTargetWidth: true };
@@ -96,12 +105,11 @@ var sh=0;
     return result;
 }
 
-// image is ready to display
-function loadHandler (evt) {
 
-  // get the image of the event
-  let img1 = evt.currentTarget;
-  // get the margin (if any)
+function loadHandler(evt){
+  let index= parseInt(evt.currentTarget.id.substring(3));
+  let img1 = evt.currentTarget
+  biscope.biimages[index].img=img1
   let m = parseInt(window.getComputedStyle(document.body,null).getPropertyValue('margin-top'));        
   //Log.log("image loaded="+img1.src+" size="+img1.width+":"+img1.height);
 
@@ -116,30 +124,65 @@ function loadHandler (evt) {
     // adjust the image position
     img1.style.left = result.targetleft+"px";
     img1.style.top = result.targettop+"px";
+    //console.log("load image info ="+JSON.stringify(result))
   }
   else{
     img1.width = sw;
     img1.height = sh-1;
   }
-  delete img1.style.backgroundSize 
- // img1.style.opacity =	.95// this.self.config.opacity;
- // img1.style.transition = "opacity 1.25s";
- // img1.style.display = "block";
-  
-  var wrapper = document.getElementById("bkimg");
-  // if another image was already displayed
-  let c = wrapper.childElementCount;
-  if(c >1)
-  {
-    for( let i =0 ; i<c-1;i++){
-      // hide it
-      wrapper.firstChild.style.opacity=0;
-      // remove the image element from the div
-      wrapper.removeChild(wrapper.firstChild);
-    }
-  }    
-  wrapper.firstChild.style.opacity =	.95// this.self.config.opacity;
-  wrapper.firstChild.style.transition = "opacity 1.25s";
-  wrapper.firstChild.style.display = "block";    
 
-};
+  img1.style.position="relative";      
+  img1.style.opacity = 1;      
+  img1.style.transition = "opacity 1.25s";
+  if(index>0) {
+    biscope.biimages[index-1].show=false;
+    biscope.biimages[index-1].active=false;
+   // biscope.biimages[index-1].img.style.opacity = 0;     
+   // biscope.biimages[index-1].img.style.transition = "opacity 10s"; 
+   // biscope.biimages[index-1].img=null
+    biscope.$apply();
+  }
+
+  biscope.biimages[index].show=true;   
+  timeout(() => {
+    //console.log("timer")
+    LoadNextImage(sservice,biscope)
+  }, cycle)
+}
+function LoadNextImage(service, scope){
+  // only change images if visual focus is set. ( not sleep, etc)
+  if(scope.focus !== 'sleep') {
+    // if we reached the end of the list
+    if(scope.biindex>=biscope.biimages.length){
+      let p = service.loadImages(scope)
+      Promise.all(p).then( () => {
+        scope.biimages=service.getImageList();
+        // reset to the start again
+        if(scope.biindex==biscope.biimages.length ){
+            scope.biimages[scope.biindex-1].show=false;
+            scope.biimages[scope.biindex-1].active=false;  
+            scope.$apply();
+        }
+        scope.biindex=0;
+        scope.biimages[scope.biindex].active=true;        
+        scope.biindex++;       
+        //console.log("restart")          
+        }
+      )      
+    }
+    else {
+      if(scope.biindex>0){        
+        scope.biimages[scope.biindex-1].show=false;
+        scope.biimages[scope.biindex-1].active=false;  
+        //if(biscope.biimages[scope.biindex-1].img){
+        //  biscope.biimages[scope.biindex-1].img.style.opacity = 0;     
+        //  biscope.biimages[scope.biindex-1].img.style.transition = "opacity 10s"; 
+          //biscope.biimages[scope.biindex-1].img=null
+        //}
+      }
+      scope.biimages[scope.biindex].active=true;          
+      scope.biindex++;  
+      //console.log("new")
+    }  
+  } 
+}
