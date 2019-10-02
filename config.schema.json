@@ -20,6 +20,11 @@
                 "title": "Shuffle", 
                 "default":false                         
                 }, 
+				 "background": {
+				        "type": "string",
+								"title": "Background Color",
+								"default": "#808080"
+								},
          "sources":
                 {
                 "type": "array",
@@ -63,6 +68,10 @@
           "key":"BackgroundImageViewer.shuffle",
           "description":"shuffle image list"
         },
+        {
+          "key":"BackgroundImageViewer.background",
+          "description":"Image Background Color"
+        },				
         {
           "type":"array",
           "title":"Image sources",          
