@@ -25,6 +25,16 @@
 								"title": "Background Color",
 								"default": "#808080"
 								},
+				 "fill": {
+				        "type": "boolean",
+								"title": "Background Color",
+								"default": false
+								},
+				 "blur": {
+				        "type": "number",
+								"title": "Blur size",
+								"default": 8
+								},								
          "sources":
                 {
                 "type": "array",
@@ -72,6 +82,14 @@
           "key":"BackgroundImageViewer.background",
           "description":"Image Background Color"
         },				
+        {
+          "key":"BackgroundImageViewer.fill",
+          "description":"Image Background fill with image"
+        },
+        {
+          "key":"BackgroundImageViewer.blur",
+          "description":"Image Background blur size"
+        },								
         {
           "type":"array",
           "title":"Image sources",          
