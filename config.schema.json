@@ -27,7 +27,7 @@
 								},
 				 "fill": {
 				        "type": "boolean",
-								"title": "Background Color",
+								"title": "Background fill with image",
 								"default": false
 								},
 				 "blur": {
