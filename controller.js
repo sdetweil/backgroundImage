@@ -151,7 +151,7 @@ function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) 
 
 function loadHandler(/*evt*/index, img1){
 	// watch out, clear this later, else memory leak
-	biscope.biimages[index].img=img1
+	//biscope.biimages[index].img=img1
 	if(debugbk)
 		console.log("entered loadHandler for image="+img1.src)
 	let m = parseInt(window.getComputedStyle(document.body,null).getPropertyValue('margin-top'));
@@ -207,11 +207,11 @@ function loadHandler(/*evt*/index, img1){
 		biscope.biimages[index-1].show=false;
 		biscope.biimages[index-1].active=false;
 		biscope.$apply();
-		if(biscope.biimages[index-1].img){
+	/*	if(biscope.biimages[index-1].img){
 			biscope.biimages[index-1].img.style="display:none";
 			// clear pointer to allow garbage collection
 			biscope.biimages[index-1].img=null
-		}
+		} */
 	}
 
 	if(debugbk) {
