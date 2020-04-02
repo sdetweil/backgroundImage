@@ -1,26 +1,37 @@
 var mime = require("mime-types");
 var electron=require('electron')
 var ngrepeat = true;
-var debug=true;
+var debugbk=false;
+
 
 //directive for image loaded event
+	var _index=0;
+	var _img1=null
 
+	
 angular.module("SmartMirror").directive('imageLoaded', function () {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
-			element.bind("load" , function(e){
-				if(debug) {console.log("image loaded")}
-				loadHandler(e);
+			element.bind("load" , function(evt){
+				if(debugbk) 
+					{console.log("image loaded")}
+				_index= parseInt(evt.currentTarget.id.substring(3));
+				_img1 = evt.currentTarget
+			    timeout(()=>{					
+					loadHandler(_index,_img1)},1);
 			});
 		}
 	}
 });
+
 var biscope=null;
 var timeout = null;
 var sservice= null;
 var imagecycle = 15*1000;
 var timer_handle = null;
+var Loading=0;
+
 angular.module("SmartMirror") //,['ngAnimate']
 	.controller("BackgroundImageViewerController",
 		function ($scope, $http, $timeout, BackgroundImageViewerService) {
@@ -35,7 +46,7 @@ angular.module("SmartMirror") //,['ngAnimate']
 			var dimensions = mainScreen.size;
 			var counter = 0;
 
-			if(debug) {console.log("window size w="+dimensions.width+" h="+dimensions.height);}
+			if(debugbk) {console.log("window size w="+dimensions.width+" h="+dimensions.height);}
 			$scope.screen= {}
 			sw=$scope.screen.width=dimensions.width
 			sh=$scope.screen.height=dimensions.height
@@ -47,20 +58,32 @@ angular.module("SmartMirror") //,['ngAnimate']
 
 			timeout= $timeout;
 
+			setInterval( ()=>{console.log("in clearcache");   getMemory(); webFrame.clearCache()}, 15000)
+
 			$scope.$watch('focus', () => {
+				if(debugbk)
+					console.log("focus changed, new="+$scope.focus)
 				// if the new focus is sleep
 				if($scope.focus ==='sleep'){
+					if(debugbk)
+						console.log("setting current image to hidden");
 					// hide the current image
 					biscope.biimages[biscope.biindex].show=false;
 				} 
 				else 
 				{
 				// only after 1st time notice.. initial setting fires watch handler
-					if(counter >0){
+					if(counter >0 && Loading==0){
+						if(debugbk)
+							console.log("wake up from sleep, start loading image")
 					// only if no timer running
 						if(timer_handle == null) {
 							LoadNextImage(BackgroundImageViewerService, biscope);
 						}
+					}
+					else {
+						if(debugbk)
+						 console.log("focus = "+$scope.focus+" Loading not 0="+Loading)
 					}
 				}
 			})
@@ -69,7 +92,7 @@ angular.module("SmartMirror") //,['ngAnimate']
 
 			let p = BackgroundImageViewerService.loadImages($scope)
 			Promise.all(p).then(() =>{
-				if(debug) {console.log(" images loaded, start display")}
+				if(debugbk) {console.log(" images loaded, start display")}
 				biscope.biimages=BackgroundImageViewerService.getImageList();
 				biscope.biindex=0;
 
@@ -124,12 +147,15 @@ function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) 
 }
 
 
-function loadHandler(evt){
-	let index= parseInt(evt.currentTarget.id.substring(3));
-	let img1 = evt.currentTarget
+
+
+function loadHandler(/*evt*/index, img1){
+	// watch out, clear this later, else memory leak
 	biscope.biimages[index].img=img1
+	if(debugbk)
+		console.log("entered loadHandler for image="+img1.src)
 	let m = parseInt(window.getComputedStyle(document.body,null).getPropertyValue('margin-top'));
-	//if(debug) console.log("image loaded="+img1.src+" size="+img1.width+":"+img1.height);
+	//if(debugbk) console.log("image loaded="+img1.src+" size="+img1.width+":"+img1.height);
 
 	if(img1.style.backgroundSize == ""){
 		// with the size of this image and it's parent
@@ -142,7 +168,7 @@ function loadHandler(evt){
 		// adjust the image position
 		img1.style.left = result.targetleft+"px";
 		img1.style.top = result.targettop+"px";
-		//if(debug) console.log("load image info ="+JSON.stringify(result))
+		//if(debugbk) console.log("load image info ="+JSON.stringify(result))
 	}
 	else{
 		img1.width = sw;
@@ -171,7 +197,8 @@ function loadHandler(evt){
 		fill_bk.style.width=sw+"px";
 		img1.parentElement.style.backgroundColor="rgba(0,0,0,0)"
 	}
-
+	if(debugbk)
+		console.log("loadHandler parent background for image="+img1.src)
 	//img1.style.backgroundColor="#808080";
 	img1.style.transition = "opacity 1.25s";
 	biscope.biimages[index].show=true;
@@ -180,26 +207,36 @@ function loadHandler(evt){
 		biscope.biimages[index-1].show=false;
 		biscope.biimages[index-1].active=false;
 		biscope.$apply();
-		if(biscope.biimages[index-1].img)
-		{biscope.biimages[index-1].img.style="display:none";}
+		if(biscope.biimages[index-1].img){
+			biscope.biimages[index-1].img.style="display:none";
+			// clear pointer to allow garbage collection
+			biscope.biimages[index-1].img=null
+		}
 	}
 
-	if(debug) {console.log("imagecycle delay time="+imagecycle)}
+	if(debugbk) {
+		console.log("imagecycle delay time="+imagecycle)
+	}
 	if(timer_handle == null) {
 		timer_handle=timeout(() => {
-			//if(debug) console.log("timer")
+			//if(debugbk) console.log("timer")
 			timer_handle = null;
 			LoadNextImage(sservice,biscope)
 		}, imagecycle)
+		if(debugbk)
+			console.log("new timer set")
 	}
 	else{
-		 if(debug) {console.log("timer handle not null");}
+		 if(debugbk) {console.log("timer handle not null");}
 	}
+	Loading--;
 }
 function LoadNextImage(service, scope){
-	if(debug) {console.log(" starting next image load")}
+
+	if(debugbk) {console.log(" starting next image load")}
 	// only change images if visual focus is set. ( not sleep, etc)
 	if(scope.focus !== 'sleep') {
+		Loading++;		
 		// if we reached the end of the list
 		if(scope.biindex>=scope.biimages.length){
 			scope.biindex=0;
@@ -215,7 +252,7 @@ function LoadNextImage(service, scope){
 				scope.biindex=0;
 				scope.biimages[scope.biindex].active=true;
 				scope.biindex++;
-				//if(debug) console.log("restart")
+				//if(debugbk) console.log("restart")
 			}
 			)
 		}
@@ -230,7 +267,43 @@ function LoadNextImage(service, scope){
 			// causing the image load
 			scope.biimages[scope.biindex].active=true;
 			scope.biindex++;
-			if(debug) {console.log("new image ")}
+			if(debugbk) {console.log("new image ")}
 		}
 	}
+	else {
+		if(debugbk)
+			console.log("scope = sleep, defer loading image")
+	}
+
 }
+
+	function format(x){
+		return x;
+	}
+	function toMb(x){
+		return x
+	}
+	function getMemory() {
+		// `format` omitted  (pads + limits to 15 characters for the output)
+		function logMemDetails(x) {
+			function toMb(bytes) {
+				return (bytes / (1000.0 * 1000)).toFixed(2)
+			}
+
+			console.log(
+				format(x[0]),
+				format(x[1].count),
+				format(toMb(x[1].size) + "MB"),
+				format(toMb(x[1].liveSize) +"MB")
+			)
+		}
+
+		console.log(
+			format("object"),
+			format("count"),
+			format("size"),
+			format("liveSize")
+		)
+		Object.entries(webFrame.getResourceUsage()).map(logMemDetails)
+		console.log('------')
+	}

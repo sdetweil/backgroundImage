@@ -1,4 +1,5 @@
 
+
 angular.module("SmartMirror")
 	.factory("BackgroundImageViewerService", 
 		function ($http, $interval) {
@@ -17,7 +18,8 @@ angular.module("SmartMirror")
 			}; 
    
 			function getImages(path) {
-				console.log("looking for images in"+path);
+				if(debugbk)
+				  console.log("looking for images in"+path);
 				let p = new Promise((resolve,reject) =>{
 					try {
 						fs.readdir(path,
@@ -51,6 +53,8 @@ angular.module("SmartMirror")
 
 			// load all images from all sources into one list
 			biservice.loadImages= function(scope){
+				if(debugbk)
+					console.log("get next image list")
 				let promises= []
 				images = [];
 				// loop thru the sources
@@ -76,6 +80,8 @@ angular.module("SmartMirror")
 			}
 			// get next image from the list
 			biservice.next= function(scope){
+				if(debugbk)
+					console.log("get next image from list")
 				var promise = new Promise((resolve, reject) => {
 					// if we have more images
 					if(imageIndex>=0 && imageIndex<images.length) {    
@@ -83,6 +89,8 @@ angular.module("SmartMirror")
 						resolve(images[imageIndex++])
 					}
 					else {
+						if(debugbk)
+							console.log("load list")
 						// no more images
 						images=[];
 						imageIndex=-1;
