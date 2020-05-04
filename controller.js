@@ -3,6 +3,8 @@ var electron=require('electron')
 var ngrepeat = true;
 var debugbk=false;
 
+	
+
 
 //directive for image loaded event
 	var _index=0;
@@ -58,7 +60,13 @@ angular.module("SmartMirror") //,['ngAnimate']
 
 			timeout= $timeout;
 
-			setInterval( ()=>{console.log("in clearcache");   getMemory(); webFrame.clearCache()}, 15000)
+			setInterval( ()=>{
+				console.log("in clearcache");   
+				if(webFrame == undefined)
+					var { webFrame } = require('electron');
+				getMemory(webFrame); 
+				webFrame.clearCache()
+			}, 15000)
 
 			$scope.$watch('focus', () => {
 				if(debugbk)
@@ -283,7 +291,7 @@ function LoadNextImage(service, scope){
 	function toMb(x){
 		return x
 	}
-	function getMemory() {
+	function getMemory(webf) {
 		// `format` omitted  (pads + limits to 15 characters for the output)
 		function logMemDetails(x) {
 			function toMb(bytes) {
@@ -302,8 +310,11 @@ function LoadNextImage(service, scope){
 			format("object"),
 			format("count"),
 			format("size"),
-			format("liveSize")
+			format("liveSize")			
 		)
-		Object.entries(webFrame.getResourceUsage()).map(logMemDetails)
-		console.log('------')
+		try {
+			Object.entries(webf.getResourceUsage()).map(logMemDetails)
+			console.log('------')
+		}
+		catch(error){}
 	}
