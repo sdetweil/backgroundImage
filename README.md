@@ -9,7 +9,7 @@ the pictures/images must be placed in the plugins/backgroundImage folder, but fo
 you can also combine multiple sources of images.  this folder and that folder, make multiple symbolic links, and define all of them in the smart-mirror config screen section for this plugin
 
 
-![example](https://github.com/sdetweil/backgroundImage/blob/master/example_usage.png)
+![example with maintain and blur](https://github.com/sdetweil/backgroundImage/blob/master/example_usage.png)
 ```
 
 ## Installing the plugin
