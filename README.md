@@ -8,6 +8,8 @@ the pictures/images must be placed in the plugins/backgroundImage folder, but fo
 
 you can also combine multiple sources of images.  this folder and that folder, make multiple symbolic links, and define all of them in the smart-mirror config screen section for this plugin
 
+
+![example](https://github.com/sdetweil/backgroundImage/blob/master/example_usage.png)
 ```
 
 ## Installing the plugin
@@ -30,7 +32,7 @@ expand the selection for #Background Image source configuration in the smart-mir
 (press the * gear icon on the top bar of the smart-mirror remote admin page
   http://smart-mirror_ip:port (default 8080)
 
-[example](https://github.com/sdetweil/backgroundImage/blob/master/example_usage.png)
+
 
 #### plugin specific options:
 
@@ -65,9 +67,6 @@ you need to add the plugin to the plugin placement info in the `Plugin Page loca
 * select `fullscreen` from the location dropbox
 * check the active checkbox
 * hit the `Submit` button to save the Configuration
-
-
-
 
 
 #### Default configuration:
