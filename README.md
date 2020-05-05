@@ -11,21 +11,17 @@ you can also combine multiple sources of images.  this folder and that folder, m
 Example background with maintain and Blur
 
 ![example with maintain and blur](https://github.com/sdetweil/backgroundImage/blob/master/example_usage.png)
-```
 
-## Installing the plugin
+# Installing the plugin
 
-To install the plugin, assuming you have smart-mirror installed and running
+# To install the plugin, assuming you have smart-mirror installed and running
 
-```
-open a terminal window (via ssh, or some other mechanism)
-cd ~/smart-mirror/plugins
-git clone https://github.com/sdetweil/backgroundImage.git
-cd backgroundImage
-copy your files to a folder here or
-make symbolic links (remember the folder names)
-```
 
+* open a terminal window (via ssh, or some other mechanism)
+* cd ~/smart-mirror/plugins
+* git clone https://github.com/sdetweil/backgroundImage.git
+* cd backgroundImage
+* copy your files to a folder here or make symbolic links (remember the folder names)
 
 ## Configuration options
 open the smart-mirror config panel, or press submit if already open to detect and load new plugins
