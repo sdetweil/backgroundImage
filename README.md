@@ -25,9 +25,9 @@ Example background with maintain and Blur
 
 ## Configuration options
 open the smart-mirror config panel, or press submit if already open to detect and load new plugins
-
-expand the selection for #Background Image source configuration in the smart-mirror config panel
+expand the selection for **Background Image source configuration**  in the smart-mirror config panel
 (press the * gear icon on the top bar of the smart-mirror remote admin page
+  (see screenshot later)
   http://smart-mirror_ip:port (default 8080)
 
 
@@ -58,8 +58,8 @@ expand the selection for #Background Image source configuration in the smart-mir
 
 * after completing the configuration above,
 you need to add the plugin to the plugin placement info in the `Plugin Page location configuration` section. (if you don't do it now, you can come back to the confg panel at any time to add this.. <br>
-------in the meantime the default placement will overlay  the command area)------
-* expand the `Plugin Page location configuration` section
+------in the meantime the default placement will overlay  the command area)------ (see screenshot later)
+* expand the **Plugin Page location configuration** section
 * hit the + key for a new entry
 * type `backgroundImage` for the plugin name
 * select `fullscreen` from the location dropbox
@@ -70,3 +70,10 @@ you need to add the plugin to the plugin placement info in the `Plugin Page loca
 #### Default configuration:
 
 none
+
+screen shots of config sections<br>
+**Background Image source configuration**
+![example with maintain and blur](https://github.com/sdetweil/backgroundImage/blob/master/plugin_config.png)
+<br>**Plugin Page location configuration**
+
+![example with maintain and blur](https://github.com/sdetweil/backgroundImage/blob/master/plugin_location_config.png)
