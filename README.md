@@ -30,7 +30,7 @@ expand the selection for #Background Image source configuration in the smart-mir
 (press the * gear icon on the top bar of the smart-mirror remote admin page
   http://smart-mirror_ip:port (default 8080)
 
-![example](https://github.com/sdetweil/backgroundImage/blob/master/example_usage.png)
+[example](https://github.com/sdetweil/backgroundImage/blob/master/example_usage.png)
 
 #### plugin specific options:
 
