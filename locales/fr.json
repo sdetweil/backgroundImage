@@ -1,0 +1,26 @@
+{
+  "backgroundImage": {
+    "config": {
+      "title": "Background Image Viewer source configuration Settings",
+      "cycle": "taux de cycle",
+      "cycle desc": "à quelle fréquence changer les images, en quelques secondes",
+      "fill style": "style de remplissage",
+      "fill desc": "comment l'image doit-elle être traitée, maintenir signifie garder le rapport d'aspect <br> fill signifie Redimensionner l'image d'arrière-plan pour couvrir tout le conteneur",
+      "shuffle": "Shuffle",
+      "shuffle selection": "mélanger la liste des images",
+      "Background Color": "Couleur de l'arrière plan",
+      "background desc": "Couleur de remplissage d'arrière-plan",
+      "fill background desc": "Fond d'image remplir avec l'image",
+      "fill image": "Remplir l'arrière-plan avec l'image",
+      "Blur size": "Taille du flou",
+      "Image Sources": "Sources d'images",
+      "source name": "Nom de la source",
+      "source path": "Chemin source",
+      "form title": "Background Image Viewer source configuration Settings",
+      "blur size desc": "Taille de flou d'arrière-plan de l'image",
+      "image sources": "Sources d'images",
+      "desc name": "Nom",
+      "desc path": "Chemin"
+    }
+  }
+}

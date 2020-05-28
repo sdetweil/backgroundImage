@@ -1,0 +1,26 @@
+{
+  "backgroundImage": {
+    "config": {
+      "title": "Background Image Viewer source configuration Settings",
+      "cycle": "사이클 속도",
+      "cycle desc": "몇 초 안에 이미지를 변경하는 빈도",
+      "fill style": "채우기 스타일",
+      "fill desc": "이미지를 어떻게 처리하고 유지해야하는지 종횡비 유지 <br> 채우기는 전체 컨테이너를 덮을 수 있도록 배경 이미지 크기를 조정합니다.",
+      "shuffle": "혼합",
+      "shuffle selection": "셔플 이미지 목록",
+      "Background Color": "배경색",
+      "background desc": "배경 채우기 색상",
+      "fill background desc": "이미지 배경 이미지로 채우기",
+      "fill image": "이미지로 배경 채우기",
+      "Blur size": "블러 사이즈",
+      "Image Sources": "이미지 소스",
+      "source name": "소스 이름",
+      "source path": "소스 경로",
+      "form title": "Background Image Viewer source configuration Settings",
+      "blur size desc": "이미지 배경 흐림 크기",
+      "image sources": "이미지 소스",
+      "desc name": "이름",
+      "desc path": "통로"
+    }
+  }
+}

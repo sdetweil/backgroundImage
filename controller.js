@@ -9,7 +9,6 @@ var debugbk=false;
 //directive for image loaded event
 	var _index=0;
 	var _img1=null
-
 	
 angular.module("SmartMirror").directive('imageLoaded', function () {
 	return {
@@ -53,15 +52,14 @@ angular.module("SmartMirror") //,['ngAnimate']
 			sw=$scope.screen.width=dimensions.width
 			sh=$scope.screen.height=dimensions.height
 			biscope=$scope;
-			biscope.bk_fill = config.BackgroundImageViewer.fill;
+			biscope.bk_fill = config.backgroundImage.fill;
 			biscope.biimages=[]
 			biscope.biindex=-1;
 			// load all the sources images
 
 			timeout= $timeout;
 
-			setInterval( ()=>{
-				console.log("in clearcache");   
+			setInterval( ()=>{ 
 				if(webFrame == undefined)
 					var { webFrame } = require('electron');
 				getMemory(webFrame); 
@@ -96,7 +94,7 @@ angular.module("SmartMirror") //,['ngAnimate']
 				}
 			})
 			sservice = BackgroundImageViewerService;
-			imagecycle=config.BackgroundImageViewer.cycle*1000
+			imagecycle=config.backgroundImage.cycle*1000
 
 			let p = BackgroundImageViewerService.loadImages($scope)
 			Promise.all(p).then(() =>{
@@ -190,20 +188,20 @@ function loadHandler(/*evt*/index, img1){
 	img1.parentElement.style.top="0px";
 	img1.parentElement.style.width=sw+"px";
 	img1.parentElement.style.height=sh+"px";
-	if(config.BackgroundImageViewer.fill == false){
-		img1.parentElement.style.backgroundColor = config.BackgroundImageViewer.background;
+	if(config.backgroundImage.fill == false){
+		img1.parentElement.style.backgroundColor = config.backgroundImage.background;
 	}
 	else{
-		img1.parentElement.style.background ="transparent";
 		
 		let fill_bk=img1.parentElement.parentElement.getElementsByClassName('bgimage')[0]
 		
-		fill_bk.style['filter']="blur("+config.BackgroundImageViewer.blur+"px)";
-		fill_bk.style["-webkit-filter"]="blur("+config.BackgroundImageViewer.blur+"px)";
+		fill_bk.style['filter']="blur("+config.backgroundImage.blur+"px)";
+		fill_bk.style["-webkit-filter"]="blur("+config.backgroundImage.blur+"px)";
 		fill_bk.style.backgroundImage = "url("+img1.src+")";
 		fill_bk.style.height=sh+"px"
 		fill_bk.style.width=sw+"px";
-		img1.parentElement.style.backgroundColor="rgba(0,0,0,0)"
+		img1.parentElement.style.background ="transparent";		
+		//img1.parentElement.style.backgroundColor="rgba(0,0,0,0)"
 	}
 	if(debugbk)
 		console.log("loadHandler parent background for image="+img1.src)
@@ -215,11 +213,6 @@ function loadHandler(/*evt*/index, img1){
 		biscope.biimages[index-1].show=false;
 		biscope.biimages[index-1].active=false;
 		biscope.$apply();
-	/*	if(biscope.biimages[index-1].img){
-			biscope.biimages[index-1].img.style="display:none";
-			// clear pointer to allow garbage collection
-			biscope.biimages[index-1].img=null
-		} */
 	}
 
 	if(debugbk) {
@@ -297,24 +290,25 @@ function LoadNextImage(service, scope){
 			function toMb(bytes) {
 				return (bytes / (1000.0 * 1000)).toFixed(2)
 			}
-
-			console.log(
-				format(x[0]),
-				format(x[1].count),
-				format(toMb(x[1].size) + "MB"),
-				format(toMb(x[1].liveSize) +"MB")
-			)
+			if(debugbk)
+				console.log(
+					format(x[0]),
+					format(x[1].count),
+					format(toMb(x[1].size) + "MB"),
+					format(toMb(x[1].liveSize) +"MB")
+				)
 		}
-
-		console.log(
-			format("object"),
-			format("count"),
-			format("size"),
-			format("liveSize")			
-		)
+		if(debugbk)
+			console.log(
+				format("object"),
+				format("count"),
+				format("size"),
+				format("liveSize")			
+			)
 		try {
 			Object.entries(webf.getResourceUsage()).map(logMemDetails)
-			console.log('------')
+			if(debugbk)
+				console.log('------')
 		}
 		catch(error){}
 	}

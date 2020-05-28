@@ -1,38 +1,38 @@
 {
   "schema": {
-    "BackgroundImageViewer": {
+    "backgroundImage": {
        "type": "object",
-       "title":"Background image viewer settings",
+       "title":"{{title}}",
         "properties": {
          "cycle":
                 {
                 "type":"number",
-                "title": "cycle rate",
+                "title": "{{cycle}}",
                 "default":15
                 },
          "size": {
                 "type": "string",
-                "title": "image size", 
+                "title": "{{fill style}}", 
                 "enum": [ "maintain","fill"]
                 },       
          "shuffle": {
                 "type": "boolean",
-                "title": "Shuffle", 
+                "title": "{{shuffle}}", 
                 "default":false                         
                 }, 
 				 "background": {
 				        "type": "string",
-								"title": "Background Color",
+								"title": "{{Background Color}}",
 								"default": "#808080"
 								},
 				 "fill": {
 				        "type": "boolean",
-								"title": "Background fill with image",
+								"title": "{{fill image}}",
 								"default": false
 								},
 				 "blur": {
 				        "type": "number",
-								"title": "Blur size",
+								"title": "{{Blur size}}",
 								"default": 8
 								},								
          "sources":
@@ -40,16 +40,16 @@
                 "type": "array",
                 "items":{
                   "type":"object",
-                  "title": "Image Sources",
+                  "title": "{{Image Sources}}",
                     "properties": {
                       "name": {
                         "type": "string",
-                        "title": "Name",
+                        "title": "{{source name}}",
                         "required": true
                       },
                       "path": {
                         "type": "string",
-                        "title": "path"           
+                        "title": "{{source path}}"           
                       }
                     }
                   }              
@@ -59,51 +59,51 @@
   },
   "form":[
     {      
-      "title":"Background Image source configuration",
+      "title":"{{form title}}",
       "type":"fieldset",      
       "_comment":"put this content at the bottom of list of config controls",
       "expandable":true,        
       "order":100,
       "items": [
         {
-          "key":"BackgroundImageViewer.cycle",
+          "key":"backgroundImage.cycle",
           "type":"number",
-          "description":"how often to change images, in seconds"
+          "description":"{{cycle desc}}"
         },   
         {
-          "key":"BackgroundImageViewer.size",
-          "description":"how should image size be treated, maintain means keep aspect ratio<br>fill means Resize the background image to cover the entire container"
+          "key":"backgroundImage.size",
+          "description":"{{fill desc}}"
         },
         {
-          "key":"BackgroundImageViewer.shuffle",
-          "description":"shuffle image list"
+          "key":"backgroundImage.shuffle",
+          "description":"{{shuffle selection}}"
         },
         {
-          "key":"BackgroundImageViewer.background",
-          "description":"Image Background Color"
+          "key":"backgroundImage.background",
+          "description":"{{background desc}}"
         },				
         {
-          "key":"BackgroundImageViewer.fill",
-          "description":"Image Background fill with image"
+          "key":"backgroundImage.fill",
+          "description":"{{fill background desc}}"
         },
         {
-          "key":"BackgroundImageViewer.blur",
-          "description":"Image Background blur size"
+          "key":"backgroundImage.blur",
+          "description":"{{blur size desc}}"
         },								
         {
           "type":"array",
-          "title":"Image sources",          
+          "title":"{{image sources}}",          
           "items":[
             {
               "type":"fieldset",   
               "items":[
                 {
-                "description":"Name",              
-                "key":"BackgroundImageViewer.sources[].name"
+                "description":"{{desc name}}",              
+                "key":"backgroundImage.sources[].name"
                 },
                 {
-                "key":"BackgroundImageViewer.sources[].path",
-                "description":"image source path, must be relative to the plugin folder. <br>use links to access outside mirror folder tree"
+                "key":"backgroundImage.sources[].path",
+                "description":"{{desc path}}"
                 }  
               ]
             }

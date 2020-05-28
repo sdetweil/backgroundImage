@@ -1,0 +1,26 @@
+{
+  "backgroundImage": {
+    "config": {
+      "title": "Background Image Viewer source configuration Settings",
+      "cycle": "Zyklusrate",
+      "cycle desc": "wie oft Bilder in Sekunden gewechselt werden müssen",
+      "fill style": "Füllstil",
+      "fill desc": "Wie soll das Bild behandelt werden? Mittel beibehalten, Seitenverhältnis beibehalten <br> Füllen bedeutet Ändern Sie die Größe des Hintergrundbilds, um den gesamten Container abzudecken",
+      "shuffle": "Mischen",
+      "shuffle selection": "Bildliste mischen",
+      "Background Color": "Hintergrundfarbe",
+      "background desc": "Hintergrundfüllfarbe",
+      "fill background desc": "Bildhintergrund mit Bild füllen",
+      "fill image": "Hintergrund mit Bild füllen",
+      "Blur size": "Unschärfegröße",
+      "Image Sources": "Bildquellen",
+      "source name": "Quellenname",
+      "source path": "Quellpfad",
+      "form title": "Background Image Viewer source configuration Settings",
+      "blur size desc": "Bild Hintergrund Unschärfe Größe",
+      "image sources": "Bildquellen",
+      "desc name": "Name",
+      "desc path": "Pfad"
+    }
+  }
+}

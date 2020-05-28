@@ -1,0 +1,26 @@
+{
+  "backgroundImage": {
+    "config": {
+      "title": "Background Image Viewer source configuration Settings",
+      "cycle": "frequenza del ciclo",
+      "cycle desc": "con quale frequenza cambiare le immagini, in pochi secondi",
+      "fill style": "stile di riempimento",
+      "fill desc": "come dovrebbe essere trattata l'immagine, mantenere significa mantenere le proporzioni <br> riempire significa ridimensionare l'immagine di sfondo per coprire l'intero contenitore",
+      "shuffle": "rimescolare",
+      "shuffle selection": "elenco di immagini in ordine casuale",
+      "Background Color": "Colore di sfondo",
+      "background desc": "Colore di riempimento dello sfondo",
+      "fill background desc": "Riempi lo sfondo dell'immagine con l'immagine",
+      "fill image": "Riempi lo sfondo con l'immagine",
+      "Blur size": "Dimensione sfocatura",
+      "Image Sources": "Fonti di immagine",
+      "source name": "Nome della fonte",
+      "source path": "Percorso sorgente",
+      "form title": "Background Image Viewer source configuration Settings",
+      "blur size desc": "Dimensione immagine sfocatura dello sfondo",
+      "image sources": "Fonti di immagine",
+      "desc name": "Nome",
+      "desc path": "Sentiero"
+    }
+  }
+}

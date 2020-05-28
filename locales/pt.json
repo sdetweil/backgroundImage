@@ -1,0 +1,26 @@
+{
+  "backgroundImage": {
+    "config": {
+      "title": "Background Image Viewer source configuration Settings",
+      "cycle": "taxa de ciclo",
+      "cycle desc": "com que frequência alterar imagens, em segundos",
+      "fill style": "estilo de preenchimento",
+      "fill desc": "como a imagem deve ser tratada, manter significa manter a proporção <br> Preencher significa redimensionar a imagem de fundo para cobrir todo o contêiner",
+      "shuffle": "Aleatório",
+      "shuffle selection": "lista aleatória de imagens",
+      "Background Color": "Cor de fundo",
+      "background desc": "Cor de preenchimento do plano de fundo",
+      "fill background desc": "Preenchimento de fundo com imagem",
+      "fill image": "Preenchimento de plano de fundo com imagem",
+      "Blur size": "Tamanho do desfoque",
+      "Image Sources": "Fontes de imagem",
+      "source name": "Nome da fonte",
+      "source path": "Caminho de origem",
+      "form title": "Background Image Viewer source configuration Settings",
+      "blur size desc": "Tamanho do desfoque do fundo da imagem",
+      "image sources": "Fontes de imagem",
+      "desc name": "Nome",
+      "desc path": "Caminho"
+    }
+  }
+}

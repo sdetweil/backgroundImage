@@ -58,7 +58,7 @@ angular.module("SmartMirror")
 				let promises= []
 				images = [];
 				// loop thru the sources
-				for(var source of config.BackgroundImageViewer.sources)
+				for(var source of config.backgroundImage.sources)
 				{
 					let p = new Promise((resolve,reject) =>{
 						let path = __dirname + '/plugins'+'/backgroundImage/'+source.path;
@@ -108,7 +108,7 @@ angular.module("SmartMirror")
 			}
 			biservice.getImageList = function(){
 				// if shuffle is requested
-				if(config.BackgroundImageViewer.shuffle){
+				if(config.backgroundImage.shuffle){
 					// shuffle the list
 					images=getShuffledArr(images)
 				}

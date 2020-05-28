@@ -1,0 +1,26 @@
+{
+  "backgroundImage": {
+    "config": {
+      "title": "Background Image Viewer source configuration Settings",
+      "cycle": "tasa de ciclo",
+      "cycle desc": "con qué frecuencia cambiar las imágenes, en segundos",
+      "fill style": "estilo de relleno",
+      "fill desc": "cómo se debe tratar la imagen, mantener significa mantener la relación de aspecto <br> llenar significa cambiar el tamaño de la imagen de fondo para cubrir todo el contenedor",
+      "shuffle": "Barajar",
+      "shuffle selection": "barajar lista de imágenes",
+      "Background Color": "Color de fondo",
+      "background desc": "Color de relleno de fondo",
+      "fill background desc": "Imagen de fondo relleno con imagen",
+      "fill image": "Relleno de fondo con imagen",
+      "Blur size": "Tamaño de desenfoque",
+      "Image Sources": "Fuentes de imagen",
+      "source name": "Nombre de la fuente",
+      "source path": "Ruta de origen",
+      "form title": "Background Image Viewer source configuration Settings",
+      "blur size desc": "Tamaño de desenfoque del fondo de la imagen",
+      "image sources": "Fuentes de imagen",
+      "desc name": "Nombre",
+      "desc path": "Camino"
+    }
+  }
+}

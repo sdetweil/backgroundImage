@@ -1,0 +1,26 @@
+{
+  "backgroundImage": {
+    "config": {
+      "title": "Background Image Viewer source configuration Settings",
+      "cycle": "cycle rate",
+      "cycle desc": "how often to change images, in seconds",
+      "fill style": "fill style",
+      "fill desc": "how should image be treated, maintain means keep aspect ratio<br>fill means Resize the background image to cover the entire container",
+      "shuffle": "Shuffle",
+      "shuffle selection": "shuffle image list",
+      "Background Color": "Background Color",
+      "background desc": "Background Fill Color",
+      "fill background desc": "Image Background fill with image",
+      "fill image": "Background fill with image",
+      "Blur size": "Blur size",
+      "Image Sources": "Image Sources",
+      "source name": "Source Name",
+      "source path": "Source Path",
+      "form title": "Background Image Viewer source configuration Settings",
+      "blur size desc": "Image Background blur size",
+      "image sources": "Image sources",
+      "desc name": "Name",
+      "desc path": "Path"
+    }
+  }
+}
