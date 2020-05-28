@@ -1,115 +1,113 @@
 {
-  "schema": {
-    "backgroundImage": {
-       "type": "object",
-    "title":"{{title}}",
-        "properties": {
-         "cycle":
-                {
-                "type":"number",
-       "title": "{{cycle}}",
-                "default":15
-                },
-         "size": {
-                "type": "string",
-         "title": "{{fill style}}", 
-                "enum": [ "maintain","fill"]
-                },       
-  "shuffle": {
-                "type": "boolean",
-                "title": "{{shuffle}}", 
-                "default":false                         
-                }, 
-				 "background": {
-				        "type": "string",
-								"title": "{{Background Color}}",
-								"default": "#808080"
+	"schema": {
+		"backgroundImage": {
+			"type": "object",
+			"title": "{{title}}",
+			"properties": {
+				"cycle": {
+					"type": "number",
+					"title": "{{cycle}}",
+					"default": 15
+				},
+				"size": {
+					"type": "string",
+					"title": "{{fill style}}",
+					"enum": ["maintain", "fill"]
+				},
+				"shuffle": {
+					"type": "boolean",
+					"title": "{{shuffle}}",
+					"default": false
+				},
+				"background": {
+					"type": "string",
+					"title": "{{Background Color}}",
+					"default": "#808080"
+				},
+				"fill": {
+					"type": "boolean",
+					"title": "{{fill image}}",
+					"default": false
+				},
+				"blur": {
+					"type": "number",
+					"title": "{{Blur size}}",
+					"default": 8
+				},
+				"sources": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"title": "{{Image Sources}}",
+						"properties": {
+							"name": {
+								"type": "string",
+								"title": "{{source name}}",
+								"required": true
+							},
+							"path": {
+								"type": "string",
+								"title": "{{source path}}"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"form": [
+		{
+			"title": "{{form title}}",
+			"type": "fieldset",
+			"_comment": "put this content at the bottom of list of config controls",
+			"expandable": true,
+			"order": 100,
+			"items": [
+				{
+					"key": "backgroundImage.cycle",
+					"type": "number",
+					"description": "{{cycle desc}}"
+				},
+				{
+					"key": "backgroundImage.size",
+					"description": "{{fill desc}}"
+				},
+				{
+					"key": "backgroundImage.shuffle",
+					"description": "{{shuffle selection}}"
+				},
+				{
+					"key": "backgroundImage.background",
+					"description": "{{background desc}}"
+				},
+				{
+					"key": "backgroundImage.fill",
+					"description": "{{fill background desc}}"
+				},
+				{
+					"key": "backgroundImage.blur",
+					"description": "{{blur size desc}}"
+				},
+				{
+					"type": "array",
+					"title": "{{image sources}}",
+					"items": [
+						{
+							"type": "fieldset",
+							"items": [
+								{
+									"description": "{{desc name}}",
+									"key": "backgroundImage.sources[].name"
 								},
-				 "fill": {
-				        "type": "boolean",
-								"title": "{{fill image}}",
-								"default": false
-								},
-				 "blur": {
-				        "type": "number",
-								"title": "{{Blur size}}",
-								"default": 8
-								},								
-         "sources":
-                {
-                "type": "array",
-                "items":{
-                  "type":"object",
-                  "title": "{{Image Sources}}",
-                    "properties": {
-                      "name": {
-                        "type": "string",
-                        "title": "{{source name}}",
-                        "required": true
-                      },
-                      "path": {
-                        "type": "string",
-                        "title": "{{source path}}"           
-                      }
-                    }
-                  }              
-              }
-        }
-    }            
-  },
-  "form":[
-    {      
-      "title":"{{form title}}",
-      "type":"fieldset",      
-      "_comment":"put this content at the bottom of list of config controls",
-      "expandable":true,        
-      "order":100,
-      "items": [
-        {
-          "key":"backgroundImage.cycle",
-          "type":"number",
-          "description":"{{cycle desc}}"
-        },   
-        {
-          "key":"backgroundImage.size",
-          "description":"{{fill desc}}"
-        },
-        {
-          "key":"backgroundImage.shuffle",
-          "description":"{{shuffle selection}}"
-        },
-        {
-          "key":"backgroundImage.background",
-          "description":"{{background desc}}"
-        },				
-        {
-          "key":"backgroundImage.fill",
-          "description":"{{fill background desc}}"
-        },
-        {
-          "key":"backgroundImage.blur",
-          "description":"{{blur size desc}}"
-        },								
-        {
-          "type":"array",
-          "title":"{{image sources}}",          
-          "items":[
-            {
-              "type":"fieldset",   
-              "items":[
-                {
-                "description":"{{desc name}}",              
-                "key":"backgroundImage.sources[].name"
-                },
-                {
-                "key":"backgroundImage.sources[].path",
-                "description":"{{desc path}}"
-                }  
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}      
+								{
+									"key": "backgroundImage.sources[].path",
+									"description": "{{desc path}}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
