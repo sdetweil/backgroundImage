@@ -2,7 +2,7 @@
   "schema": {
     "backgroundImage": {
        "type": "object",
-       "title":"{{title}}",
+    "title":"{{title}}",
         "properties": {
          "cycle":
                 {
@@ -15,7 +15,7 @@
          "title": "{{fill style}}", 
                 "enum": [ "maintain","fill"]
                 },       
-         "shuffle": {
+  "shuffle": {
                 "type": "boolean",
                 "title": "{{shuffle}}", 
                 "default":false                         
