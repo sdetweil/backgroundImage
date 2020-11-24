@@ -2,52 +2,52 @@
 	"schema": {
 		"backgroundImage": {
 			"type": "object",
-			"title": "Background Image Viewer source configuration Settings",
+			"title": "{{title}}",
 			"properties": {
 				"cycle": {
 					"type": "number",
-					"title": "cycle rate",
+					"title": "{{cycle}}",
 					"default": 15
 				},
 				"size": {
 					"type": "string",
-					"title": "fill style",
+					"title": "{{fill style}}",
 					"enum": ["maintain", "fill"]
 				},
 				"shuffle": {
 					"type": "boolean",
-					"title": "Shuffle",
+					"title": "{{shuffle}}",
 					"default": false
 				},
 				"background": {
 					"type": "string",
-					"title": "ackground Color",
+					"title": "{{Background Color}}",
 					"default": "#808080"
 				},
 				"fill": {
 					"type": "boolean",
-					"title": "Background fill with image",
+					"title": "{{fill image}}",
 					"default": false
 				},
 				"blur": {
 					"type": "number",
-					"title": "Blur size",
+					"title": "{{Blur size}}",
 					"default": 8
 				},
 				"sources": {
 					"type": "array",
 					"items": {
 						"type": "object",
-						"title": "Image Sources",
+						"title": "{{Image Sources}}",
 						"properties": {
 							"name": {
 								"type": "string",
-								"title": "Source Name",
+								"title": "{{source name}}",
 								"required": true
 							},
 							"path": {
 								"type": "string",
-								"title": "Source Path"
+								"title": "{{source path}}"
 							}
 						}
 					}
@@ -57,7 +57,7 @@
 	},
 	"form": [
 		{
-			"title": "Background Image Viewer source configuration Settings",
+			"title": "{{form title}}",
 			"type": "fieldset",
 			"_comment": "put this content at the bottom of list of config controls",
 			"expandable": true,
@@ -66,42 +66,42 @@
 				{
 					"key": "backgroundImage.cycle",
 					"type": "number",
-					"description": "how often to change images, in seconds"
+					"description": "{{cycle desc}}"
 				},
 				{
 					"key": "backgroundImage.size",
-					"description": "ow should image be treated, maintain means keep aspect ratio<br>fill means Resize the background image to cover the entire container"
+					"description": "{{fill desc}}"
 				},
 				{
 					"key": "backgroundImage.shuffle",
-					"description": "shuffle image list"
+					"description": "{{shuffle selection}}"
 				},
 				{
 					"key": "backgroundImage.background",
-					"description": "Background Fill Color"
+					"description": "{{background desc}}"
 				},
 				{
 					"key": "backgroundImage.fill",
-					"description": "Image Background fill with image"
+					"description": "{{fill background desc}}"
 				},
 				{
 					"key": "backgroundImage.blur",
-					"description": "Image Background blur size"
+					"description": "{{blur size desc}}"
 				},
 				{
 					"type": "array",
-					"title": "Image sources",
+					"title": "{{image sources}}",
 					"items": [
 						{
 							"type": "fieldset",
 							"items": [
 								{
-									"description": "Name",
+									"description": "{{desc name}}",
 									"key": "backgroundImage.sources[].name"
 								},
 								{
 									"key": "backgroundImage.sources[].path",
-									"description": "Path"
+									"description": "{{desc path}}"
 								}
 							]
 						}
