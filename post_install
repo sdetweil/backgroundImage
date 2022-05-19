@@ -1,3 +1,8 @@
 #!/bin/bash
+if [ -e ../../app/locales/enc.json ]; then  
+  cp config.schema.json.nls config.schema.json
 rm ../../app/locales/??c.json 2>/dev/null
+else
+   cp config.schema.json.no-nls config.schema.json
+fi 
 cp .pre-commit .git/hooks/pre-commit

@@ -34,19 +34,17 @@ var Loading = 0;
 
 angular
 	.module("SmartMirror") //,['ngAnimate']
-	.controller("BackgroundImageViewerController", function (
-		$scope,
-		$http,
-		$timeout,
-		BackgroundImageViewerService
-	) {
-		var atomScreen = null;
-		if (electron.screen == undefined) {
-			atomScreen = electron.remote.screen;
-		} else {
-			atomScreen = electron.screen;
-		}
-
+	.controller(
+		"BackgroundImageViewerController",
+		function ($scope, $http, $timeout, BackgroundImageViewerService) {
+			var atomScreen = null;
+			if (electron.screen == undefined) {
+				//const { screen } = require('electron')
+				atomScreen = screen; // electron.remote.screen;
+			} else {
+				atomScreen = screen;
+			}
+			/*
 		let displays = atomScreen.getAllDisplays();
 		for (display of displays) {
 			console.log(
@@ -60,73 +58,89 @@ angular
 		}
 
 		var mainScreen = atomScreen.getPrimaryDisplay();
+
 		var dimensions = mainScreen.size;
-		var counter = 0;
+*/
+			var dimensions = {
+				width: atomScreen.width,
+				height: atomScreen.height,
+			};
+			var counter = 0;
 
-		if (debugbk) {
-			console.log(
-				"window size w=" + dimensions.width + " h=" + dimensions.height
-			);
-		}
-		$scope.screen = {};
-		sw = $scope.screen.width = dimensions.width;
-		sh = $scope.screen.height = dimensions.height;
-		biscope = $scope;
-		biscope.bk_fill = config.backgroundImage.fill;
-		biscope.biimages = [];
-		biscope.biindex = -1;
-		// load all the sources images
-
-		timeout = $timeout;
-
-		setInterval(() => {
-			if (webFrame == undefined) var { webFrame } = require("electron");
-			getMemory(webFrame);
-			webFrame.clearCache();
-		}, 15000);
-
-		$scope.$watch("focus", () => {
-			if (debugbk) console.log("focus changed, new=" + $scope.focus);
-			// if the new focus is sleep
-			if ($scope.focus === "sleep") {
-				if (debugbk) console.log("setting current image to hidden");
-				// hide the current image
-				biscope.biimages[biscope.biindex].show = false;
-			} else {
-				// only after 1st time notice.. initial setting fires watch handler
-				if (counter > 0 && Loading == 0) {
-					if (debugbk)
-						console.log("wake up from sleep, start loading image");
-					// only if no timer running
-					if (timer_handle == null) {
-						LoadNextImage(BackgroundImageViewerService, biscope);
-					}
-				} else {
-					if (debugbk)
-						console.log(
-							"focus = " +
-								$scope.focus +
-								" Loading not 0=" +
-								Loading
-						);
-				}
-			}
-		});
-		sservice = BackgroundImageViewerService;
-		imagecycle = config.backgroundImage.cycle * 1000;
-
-		let p = BackgroundImageViewerService.loadImages($scope);
-		Promise.all(p).then(() => {
 			if (debugbk) {
-				console.log(" images loaded, start display");
+				console.log(
+					"window size w=" +
+						dimensions.width +
+						" h=" +
+						dimensions.height
+				);
 			}
-			biscope.biimages = BackgroundImageViewerService.getImageList();
-			biscope.biindex = 0;
+			$scope.screen = {};
+			sw = $scope.screen.width = dimensions.width;
+			sh = $scope.screen.height = dimensions.height;
+			biscope = $scope;
+			biscope.bk_fill = config.backgroundImage.fill;
+			biscope.biimages = [];
+			biscope.biindex = -1;
+			// load all the sources images
 
-			LoadNextImage(BackgroundImageViewerService, biscope);
-			counter = 1;
-		});
-	});
+			timeout = $timeout;
+
+			setInterval(() => {
+				if (webFrame == undefined)
+					var { webFrame } = require("electron");
+				getMemory(webFrame);
+				webFrame.clearCache();
+			}, 15000);
+
+			$scope.$watch("focus", () => {
+				if (debugbk) console.log("focus changed, new=" + $scope.focus);
+				// if the new focus is sleep
+				if ($scope.focus === "sleep") {
+					if (debugbk) console.log("setting current image to hidden");
+					// hide the current image
+					biscope.biimages[biscope.biindex].show = false;
+				} else {
+					// only after 1st time notice.. initial setting fires watch handler
+					if (counter > 0 && Loading == 0) {
+						if (debugbk)
+							console.log(
+								"wake up from sleep, start loading image"
+							);
+						// only if no timer running
+						if (timer_handle == null) {
+							LoadNextImage(
+								BackgroundImageViewerService,
+								biscope
+							);
+						}
+					} else {
+						if (debugbk)
+							console.log(
+								"focus = " +
+									$scope.focus +
+									" Loading not 0=" +
+									Loading
+							);
+					}
+				}
+			});
+			sservice = BackgroundImageViewerService;
+			imagecycle = config.backgroundImage.cycle * 1000;
+
+			let p = BackgroundImageViewerService.loadImages($scope);
+			Promise.all(p).then(() => {
+				if (debugbk) {
+					console.log(" images loaded, start display");
+				}
+				biscope.biimages = BackgroundImageViewerService.getImageList();
+				biscope.biindex = 0;
+
+				LoadNextImage(BackgroundImageViewerService, biscope);
+				counter = 1;
+			});
+		}
+	);
 
 function ScaleImage(
 	srcwidth,
@@ -223,9 +237,10 @@ function loadHandler(/*evt*/ index, img1) {
 			config.backgroundImage.background;
 	} else {
 		img1.parentElement.style.background = "transparent";
-		let fill_bk = img1.parentElement.parentElement.getElementsByClassName(
-			"bgimage"
-		)[0];
+		let fill_bk =
+			img1.parentElement.parentElement.getElementsByClassName(
+				"bgimage"
+			)[0];
 
 		fill_bk.style["filter"] = "blur(" + config.backgroundImage.blur + "px)";
 		fill_bk.style["-webkit-filter"] =

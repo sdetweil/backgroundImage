@@ -21,7 +21,7 @@
 				},
 				"background": {
 					"type": "string",
-					"title": "ackground Color",
+					"title": "Background Color",
 					"default": "#808080"
 				},
 				"fill": {
@@ -70,7 +70,7 @@
 				},
 				{
 					"key": "backgroundImage.size",
-					"description": "ow should image be treated, maintain means keep aspect ratio<br>fill means Resize the background image to cover the entire container"
+					"description": "how should image be treated, maintain means keep aspect ratio<br>fill means Resize the background image to cover the entire container"
 				},
 				{
 					"key": "backgroundImage.shuffle",
