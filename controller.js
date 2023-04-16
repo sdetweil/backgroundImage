@@ -245,7 +245,7 @@ function loadHandler(/*evt*/ index, img1) {
 		fill_bk.style["filter"] = "blur(" + config.backgroundImage.blur + "px)";
 		fill_bk.style["-webkit-filter"] =
 			"blur(" + config.backgroundImage.blur + "px)";
-		fill_bk.style.backgroundImage = "url(" + img1.src + ")";
+		fill_bk.style.backgroundImage = "url(" + img1.src + "?bk=true" + ")";
 		fill_bk.style.height = sh + "px";
 		fill_bk.style.width = sw + "px";
 
@@ -255,7 +255,9 @@ function loadHandler(/*evt*/ index, img1) {
 		console.log("loadHandler parent background for image=" + img1.src);
 	//img1.style.backgroundColor="#808080";
 	img1.style.transition = "opacity 1.25s";
+
 	biscope.biimages[index].show = true;
+
 	if (index > 0) {
 		biscope.biimages[index - 1].show = false;
 		biscope.biimages[index - 1].active = false;
@@ -312,8 +314,9 @@ function LoadNextImage(service, scope) {
 			}
 			// show next one, angular active=true will inject the html
 			// causing the image load
-			scope.biimages[scope.biindex].active = true;
-			scope.biindex++;
+			biscope.biimages[scope.biindex].lastused = moment().valueOf();
+			scope.biimages[scope.biindex++].active = true;
+			//scope.biindex++;
 			if (debugbk) {
 				console.log("new image ");
 			}
