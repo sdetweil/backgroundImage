@@ -98,8 +98,11 @@ angular
 				// if the new focus is sleep
 				if ($scope.focus === "sleep") {
 					if (debugbk) console.log("setting current image to hidden");
-					// hide the current image
-					biscope.biimages[biscope.biindex].show = false;
+					// if there is a list of images and we have a good index to one
+					// possible to hide before 1st shown
+					if (biscope.biimages && biscope.biindex > -1)
+						// hide the current image
+						biscope.biimages[biscope.biindex].show = false;
 				} else {
 					// only after 1st time notice.. initial setting fires watch handler
 					if (counter > 0 && Loading == 0) {
