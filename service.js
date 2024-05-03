@@ -59,7 +59,7 @@ angular
 			// loop thru the sources
 			for (var source of config.backgroundImage.sources) {
 				let p = new Promise((resolve, reject) => {
-					let path =
+					const path = source,path.startsWith('/')? source.path : 
 						__dirname +
 						"/plugins" +
 						"/backgroundImage/" +
