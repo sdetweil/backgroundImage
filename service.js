@@ -59,11 +59,12 @@ angular
 			// loop thru the sources
 			for (var source of config.backgroundImage.sources) {
 				let p = new Promise((resolve, reject) => {
-					const path = source,path.startsWith('/')? source.path : 
-						__dirname +
-						"/plugins" +
-						"/backgroundImage/" +
-						source.path;
+					let path = source.path.startsWith("/")
+						? source.path
+						: __dirname +
+						  "/plugins" +
+						  "/backgroundImage/" +
+						  source.path;
 					// get the images for this source
 					//console.log("getting images from path="+path+" source="+source)
 					getImages(path).then((imagelist) => {
